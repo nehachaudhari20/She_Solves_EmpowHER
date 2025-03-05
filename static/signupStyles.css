@@ -33,3 +33,18 @@ body {
 a {
     color: #d1c4e9;
 }
+
+
+.btn-custom, .btn-custom1 {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    background: linear-gradient(to bottom, #ffffff, #f8e8ff);
+    color: black;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+    width: 220px;
+    position: relative;
+    z-index: 2;
+}
