@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime
 
 
-from services.report_gen import generate_pdf
+from report_gen import generate_pdf
 
 def test_generate_pdf():
     report_data = {
@@ -19,12 +19,16 @@ def test_generate_pdf():
         "severity": "HIGH"  
     }
 
+    reports_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../reports"))
+    os.makedirs(reports_folder, exist_ok=True)
+
     pdf_path = generate_pdf(report_data)
+    print(f"Report saved at: {pdf_path}")
     
     assert os.path.exists(pdf_path), "PDF was not created"
     
     os.remove(pdf_path)
-    print("✅ Test Passed: PDF Generation Successful")
+    print("Test Passed: PDF Generation Successful")
 
 if __name__ == "__main__":
     test_generate_pdf()

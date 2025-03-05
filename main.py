@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from routes import report, severity, chatbot
+from routes import report_router, severity_router, chatbot_router
 
 app = FastAPI()
 app.include_router(report.router, prefix="/report", tags = ["Incident Report"])

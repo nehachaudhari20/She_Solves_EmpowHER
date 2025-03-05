@@ -3,7 +3,7 @@ from reportlab.pdfgen import canvas
 import os
 
 def generate_pdf(report_data):
-    pdf_path = f"reports/{report_data['incident_id']}.pdf"
+    pdf_path = os.path.join(f"reports/{report_data['incident_id']}.pdf")
     os.makedirs("reports", exist_ok = True)
     c = canvas.Canvas(pdf_path, pagesize=letter)
     c.drawString(100, 750, "Incident Report")
@@ -16,6 +16,4 @@ def generate_pdf(report_data):
     c.drawString(100, 610, f"Severity: {report_data['severity']}")
     c.save()
     return pdf_path
-
-
 
