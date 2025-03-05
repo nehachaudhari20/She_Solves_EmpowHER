@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="formStyles.css">
+    <style>
+        body {
+            background-color: #3e096b;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-container {
+            background-color: #b136ed;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: auto;
+            transform: scale(0.9);
+            animation: popIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: none;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            outline: none;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .btn-custom {
+            background-color: #ffffff;
+            color: black;
+            font-weight: bold;
+            border-radius: 10px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .btn-custom:hover {
+            background-color: #ffccff;
+            color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 0 10px rgba(255, 204, 255, 0.8);
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center">Report Workplace Incident</h2>
+            <form id="complaintForm">
+                
+                <div class="mb-3">
+                    <label for="location" class="form-label"><strong>Location:</strong></label>
+                    <input type="text" id="location" class="form-control" placeholder="Enter location" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="incidentType" class="form-label"><strong>Type of Incident:</strong></label>
+                    <select id="incidentType" class="form-select" required>
+                        <option value="" disabled selected>Select an incident type</option>
+                        <option value="Sexual Harassment">Sexual Harassment</option>
+                        <option value="Gender Discrimination">Gender Discrimination</option>
+                        <option value="Workplace Bullying">Workplace Bullying</option>
+                        <option value="Verbal Abuse">Verbal Abuse by Colleagues/Supervisors</option>
+                        <option value="Stalking">Stalking by a Colleague/Superior</option>
+                        <option value="Cyber Harassment">Cyber Harassment (Emails, Messages, etc.)</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 hidden" id="otherIncidentContainer">
+                    <label for="otherIncident" class="form-label"><strong>Specify Incident:</strong></label>
+                    <input type="text" id="otherIncident" class="form-control" placeholder="Describe the incident">
+                </div>
+
+                <div class="mb-3">
+                    <label for="incidentDetails" class="form-label"><strong>Incident Description:</strong></label>
+                    <textarea id="incidentDetails" class="form-control" placeholder="Describe the incident..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-custom">Submit Complaint</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("incidentType").addEventListener("change", function() {
+            const otherIncidentContainer = document.getElementById("otherIncidentContainer");
+            if (this.value === "Other") {
+                otherIncidentContainer.classList.add("show");
+            } else {
+                otherIncidentContainer.classList.remove("show");
+                setTimeout(() => {
+                    otherIncidentContainer.classList.add("hidden");
+                }, 300);
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
