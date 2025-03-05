@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from database import reports_collection
+#from database import reports_collection
 from models import Report
 from services.report_gen import generate_pdf
-from database import chatbot_history
+#from database import chatbot_history
 
 router = APIRouter()
 
@@ -21,9 +21,9 @@ async def submit_report(report: Report):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-def store_chatbot_message(user_id, message, response):
+'''def store_chatbot_message(user_id, message, response):
     chatbot_history.insert_one({
         "user_id": user_id,
         "message": message,
         "response": response
-    })
+    })'''
