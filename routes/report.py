@@ -7,4 +7,10 @@ router = APIRouter()
 
 @router.port("/")
 async def submit_report(report: Report):
-    
+    report_data = report.model_dump()
+    reports_collection.insert_one(report_data)
+
+
+    pdf_path = generate_pdf(report_data)
+
+    return{"message": "Report is submitted successfully!!", "pdf": pdf_path}
