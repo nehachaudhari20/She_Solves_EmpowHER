@@ -51,7 +51,7 @@ npm install
 npm start
 
 ## OUR Design
-![Alt Text]("C:\Users\DELL\Pictures\Screenshots\Screenshot 2025-03-06 111301.png")
+![Screenshot](file:///C:/Users/DELL/Pictures/Screenshots/Screenshot%202025-03-06%20111301.png)
 
 
 
