@@ -50,8 +50,35 @@ npm install
 
 npm start
 
-## OUR Design
-![Screenshot]("C:\Users\DELL\Pictures\Screenshots\Screenshot 2025-03-06 111301.png")
+### **Business Model for SAKHI: Women’s Workplace Safety & Support System**
+
+**Value Proposition**:
+- **For Women Employees**: Secure, anonymous reporting of workplace incidents (e.g., harassment), AI-driven emotional support, and legal guidance based on the POSH Act.
+- **For Employers**: Ensures compliance with workplace safety laws, automates incident management, and provides data-driven insights for improving workplace culture.
+
+**Revenue Model**:
+1. **Subscription-based Model**: Organizations pay based on employee count for access to the platform's features.
+2. **Freemium Model for Employees**: Free basic services with premium mental health and legal features.
+3. **Data Analytics Reports**: Selling anonymized data insights to organizations for improving workplace culture.
+4. **Legal Partnering**: Partnering with law firms for additional services.
+
+**Target Audience**:
+- Women employees across industries.
+- Organizations seeking to provide a safe workplace and comply with legal standards.
+
+**Marketing Strategy**:
+- Target HR and legal teams in companies.
+- Content marketing, partnerships with NGOs, webinars, and referral programs.
+
+**Cost Structure**:
+- Development, AI infrastructure, marketing, legal consultation, and server costs.
+
+**Scalability**:
+- Expand globally, continuously improve AI models, and add more premium features for employers and employees.
+
+**Competitive Advantage**:
+- Focus on privacy, AI-driven support, and a comprehensive solution for workplace safety, legal guidance, and emotional support.
+
 
 
 
