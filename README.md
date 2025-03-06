@@ -1,48 +1,58 @@
-# SAKHI - Your Trusted Companion  
+# **Women’s Workplace Safety & Support System (SAKHI)**
 
-SAKHI is a safe and supportive platform for women to report harassment, discrimination, and other issues with complete confidentiality. It provides anonymous reporting, support networks, and 24/7 assistance.
-- [SAKHI - Your Trusted Companion](#sakhi---your-trusted-companion)
-  - [🚀 Features](#-features)
-  - [📌 Technologies Used](#-technologies-used)
-  - [🛠️ Installation & Setup](#️-installation--setup)
-  - [💡 How to Use](#-how-to-use)
-
-## 🚀 Features  
-- **Anonymous Reporting** - Report incidents securely without revealing your identity.  
-- **Support Network** - Connect with organizations that provide for legal aid, counseling, guidance and advices.  
-- **24/7 AI Chatbot** - Get immediate support at any time 24/7.  
-- **Track Reports** - Monitor the progress of user's case.  
-- **Educational Resources** - Learn about your rights and assistance.
+**SAKHI** is a web-based platform designed to provide a safe and supportive space for women across various workplaces to report incidents such as harassment, verbal abuse, or unsafe working conditions. The system allows female employees to securely report workplace incidents, receive AI-driven mental health and legal guidance through a chatbot, and ensures confidentiality and compliance with **The POSH Act, 2013**. The system generates reports and sends them to the Internal Complaints Committee (IIC) for redressal.
 
 ---
 
-## 📌 Technologies Used  
-- **Frontend**: HTML, CSS (Bootstrap), JavaScript  
-- **Backend (Future Scope)**:FastAPI
-- **Database (Future Scope)**: MongoDB  
+## **Features**
+
+- **Anonymous Reporting**: Allows users to report incidents anonymously or with their details (name, email, employee ID).
+- **Incident Classification**: Uses NLP to detect the severity of the incident (high or low).
+- **AI-Driven Support**: If the incident severity is low, users can interact with a chatbot for mental health support.
+- **PDF Report Generation**: For high-severity incidents, a detailed report is generated and sent to the Internal Complaints Committee (IIC).
+- **Legal Awareness**: Provides basic legal guidance related to workplace harassment and informs users about their rights under The POSH Act, 2013.
+- **Data Privacy**: Ensures complete confidentiality and compliance with relevant workplace laws.
 
 ---
 
-## 🛠️ Installation & Setup  
-To run the project locally:  
+## **Technology Stack**
 
-1. **Clone the Repository**  
-   ```bash
-   git clone https://github.com/nehachaudhari20/She_Solves_EmpowerHer.git
-   cd sakhi
-   ### 2️⃣ Open the Project  
-- Locate the `index.html` file in the project directory.  
-- Open it in a browser to test the frontend.  
+- **Backend**: 
+  - **Python (FastAPI)** for handling NLP and generating PDF reports.
+  - **Node.js** for handling API requests, interacting with the Gemini API, and managing chat functionality.
+  
+- **NLP (Natural Language Processing)**: 
+  - Pre-trained **DistilBERT** model (via **Hugging Face Transformers**) for classifying the severity of reported incidents.
 
-### 3️⃣ Backend Setup (Future Scope)  
-- The backend is planned to be developed using **FastAPI**.  
-- Database integration with **MongoDB** added.  
+- **Frontend**: 
+  - **Bootstrap** for responsive, user-friendly interfaces.
+  
+- **Chatbot**: 
+  - **Gemini API** for providing emotional support through an AI-driven chatbot.
 
-## 💡 How to Use  
-Here’s a quick guide on how to navigate and use the platform:  
+- **PDF Generation**: 
+  - **Python libraries** such as **reportlab** for generating the detailed incident report in PDF format.
 
-1. **Sign Up/Login** – Create an account or use the platform anonymously.  
-2. **Report an Incident** – Fill in the necessary details and submit your report securely.  
-3. **Access Support** – Connect with NGOs, counselors, and legal advisors for guidance.  
-4. **Track Your Report** – Monitor progress and updates on your case.  
-5. **Use AI Chatbot** – Get instant help with common queries, available 24/7.  
+---
+
+## **How to Run the Project**
+
+### **1. Clone the Repository**
+git clone https://github.com/your-username/sakhi-workplace-safety.git
+cd sakhi-workplace-safety
+
+### **2. Install Backend Dependencies**
+cd python-backend
+pip install -r requirements.txt
+
+cd node-backend
+npm install
+
+npm start
+
+## OUR Design
+![Alt Text]("C:\Users\DELL\Pictures\Screenshots\Screenshot 2025-03-06 111301.png")
+
+
+
+
