@@ -80,6 +80,9 @@ npm start
 - Focus on privacy, AI-driven support, and a comprehensive solution for workplace safety, legal guidance, and emotional support.
 
 
+## DESING
+![Screenshot](file:///C:\Users\DELL\EmpowHER\images\Screenshot 2025-03-06 111301.png)
+
 
 
 
