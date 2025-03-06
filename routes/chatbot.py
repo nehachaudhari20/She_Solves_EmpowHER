@@ -12,5 +12,5 @@ print(response.text)
 
 @router.post("/")
 async def chatbot_reponder(data: dict):
-    reponses = model.generate_content(data["mesage"])
-    return {'response': response.text}
+    responses = model.generate_content(data["message"])
+    return {'response': responses.text}

@@ -19,31 +19,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-<<<<<<< HEAD
 
 
 
-=======
-app.mount("/static", StaticFiles(directory="static"), name="static")    
-
-templates = Jinja2Templates(directory="templates")
->>>>>>> 8651c12512a3f7b138427db3b132272181e9bc12
 
 app.include_router(report_router, prefix="/report", tags=["Incident Report"])
 app.include_router(severity_router, prefix="/severity", tags=["Severity Analysis"])
 app.include_router(chatbot_router, prefix="/chatbot", tags=["SAKHI"])
 
-<<<<<<< HEAD
 app.mount("/static", StaticFiles(directory="static"), name="static")    
 templates = Jinja2Templates(directory="templates")
-=======
->>>>>>> 8651c12512a3f7b138427db3b132272181e9bc12
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_home(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
-<<<<<<< HEAD
 @app.get("/", response_class=HTMLResponse)
 async def serve_home(request: Request):
     return templates.TemplateResponse("sign.html", {"request": request})
@@ -60,8 +50,6 @@ async def serve_home(request: Request):
 async def serve_home(request: Request):
     return templates.TemplateResponse("chatbot.html", {"request": request})
 
-=======
->>>>>>> 8651c12512a3f7b138427db3b132272181e9bc12
 
 @app.get("/")
 def root():
