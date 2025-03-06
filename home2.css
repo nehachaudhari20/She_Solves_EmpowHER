@@ -4,7 +4,7 @@ html, body {
             padding: 0;
             background: linear-gradient(to bottom, #3e096b, #b136ed, #ffccff, #ffffff);
             background-attachment: fixed;
-            color: white;
+            color: rgb(84, 28, 96);
             font-family: Arial, sans-serif;
             overflow-x: hidden;
         }
