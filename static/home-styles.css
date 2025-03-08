@@ -431,7 +431,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Space between cards */
+  gap: 20px; 
   flex-wrap: nowrap; /* Prevents cards from wrapping to the next line */
   overflow-x: auto; /* Enables horizontal scrolling on smaller screens */
   padding: 10px;
