@@ -111,6 +111,8 @@ section {
 
 /* Navbar */
 .navbar {
+  font-size: 1.15rem;
+  font-weight: 500;
   padding: 15px 0;
   transition: var(--transition);
   background: transparent;
@@ -131,7 +133,7 @@ section {
 }
 
 .nav-logo {
-  height: 40px;
+  height: 80px;
   width: auto;
 }
 
@@ -241,7 +243,11 @@ section {
   left: 0;
   width: 100%;
 }
-
+.herVoice {
+  font-style: italic;
+  font-size: 1.1rem;
+  /* font-weight: bold; */
+}
 /* Features Section */
 .features-section {
   background-color: var(--white);
@@ -412,51 +418,58 @@ section {
   margin: 0;
 }
 
-/* Statistics Section */
-.statistics-section {
+/* SAKHI Section */
+.sakhi-section {
   background: var(--gradient);
   color: var(--white);
   position: relative;
+  padding: 50px 0;
 }
 
-.stat-card {
+/* Ensures all cards stay in one line */
+.sakhi-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Space between cards */
+  flex-wrap: nowrap; /* Prevents cards from wrapping to the next line */
+  overflow-x: auto; /* Enables horizontal scrolling on smaller screens */
+  padding: 10px;
+}
+
+/* Individual Cards */
+.sakhi-card {
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 10px;
   padding: 30px 20px;
-  height: 100%;
+  width: 200px; /* Adjust width as needed */
   text-align: center;
   transition: var(--transition);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0; /* Prevents shrinking when space is limited */
+  
 }
 
-.stat-card:hover {
+.sakhi-card:hover {
   transform: translateY(-10px);
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.stat-icon {
+.sakhi-icon {
   font-size: 2.5rem;
   margin-bottom: 15px;
   color: var(--accent);
 }
-
-.stat-card h3 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  display: inline-block;
+.sakhi-card p {
+  font-size: 1.5rem;
+  color: white
+  margin-bottom: 20px;
 }
-
-.percent,
-.plus {
-  font-size: 2rem;
+.sakhi-card h4 {
+  font-size: 1rem;
   font-weight: 700;
-}
-
-.stat-card p {
-  font-size: 1.1rem;
-  margin: 0;
+  /* text-transform: uppercase; */
 }
 
 /* FAQ Section */
