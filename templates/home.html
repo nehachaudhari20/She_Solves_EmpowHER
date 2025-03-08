@@ -52,7 +52,7 @@
               <a class="nav-link" href="#features-section">ABOUT</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#footer">ORGANIZATIONS</a>
+              <a class="nav-link" href="#footer">CONTACT US</a>
             </li>
           </ul>
           <a href="/chatbot" class="chat-btn">
@@ -63,7 +63,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero-section">
+    <header id="hero" class="hero-section">
       <div class="container text-center">
         <div class="row justify-content-center">
           <div class="col-lg-10">
@@ -71,10 +71,7 @@
             <h2 class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
               Your Trusted Companion in Times of Need
             </h2>
-            <p class="lead mb-5" data-aos="fade-up" data-aos-delay="400">
-              A safe platform for women to report harassment, discrimination,
-              and other issues with complete confidentiality and support.
-            </p>
+            <p class=" herVoice" data-aos="fade-up" data-aos-delay="400">"Her voice, her safety."</p>   
             <p class="report-text" data-aos="fade-up" data-aos-delay="600">
               REPORT AN ISSUE, WRITE HERE...
             </p>
@@ -104,7 +101,7 @@
     </header>
 
     <!-- Features Section -->
-    <section class="features-section py-5">
+    <section id="features-section" class="features-section py-5">
       <div class="container">
         <div class="section-header text-center mb-5" data-aos="fade-up">
           <h6 class="text-primary fw-bold">OUR SERVICES</h6>
@@ -319,56 +316,52 @@
       </div>
     </section>
 
-    <!-- Statistics Section -->
-    <section class="statistics-section py-5">
-      <div class="container">
-        <div class="section-header text-center mb-5" data-aos="fade-up">
-          <h6 class="text-white fw-bold">STATISTICS</h6>
-          <h2 class="section-title text-white">Our Impact</h2>
-          <div class="section-divider bg-white"></div>
+    <section class="sakhi-section py-5">
+        <div class="container">
+            <div class="section-header text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title text-white">What is SAKHI?</h2>
+                <div class="section-divider bg-white"></div>
+            </div>
+    
+            <!-- Flex container for one-line layout -->
+            <div class="sakhi-container">
+                <div class="sakhi-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="sakhi-icon">
+                        <!-- <i class="bi bi-shield-lock"></i> -->
+                    </div>
+                    <h3>S</h3>
+                    <p>Safety</p>
+                </div>
+                <div class="sakhi-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="sakhi-icon">
+                        <!-- <i class="bi bi-lightbulb"></i> -->
+                    </div>
+                    <h3>A</h3>
+                    <p>Awareness</p>
+                </div>
+                <div class="sakhi-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="sakhi-icon">
+                        <!-- <i class="bi bi-heart-fill"></i> -->
+                    </div>
+                    <h3>K</h3>
+                    <p>Kindness</p>
+                </div>
+                <div class="sakhi-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="sakhi-icon">
+                        <!-- <i class="bi bi-award-fill"></i> -->
+                    </div>
+                    <h3>H</h3>
+                    <p>Honor</p>
+                </div>
+                <div class="sakhi-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="sakhi-icon">
+                        <!-- <i class="bi bi-person-check-fill"></i> -->
+                    </div>
+                    <h3>I</h3>
+                    <p>Independence</p>
+                </div>
+            </div>
         </div>
-
-        <div class="row g-4">
-          <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="bi bi-people-fill"></i>
-              </div>
-              <h3 class="counter" data-target="5000">0</h3>
-              <p>Women Supported</p>
-            </div>
-          </div>
-          <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="bi bi-check-circle-fill"></i>
-              </div>
-              <h3 class="counter" data-target="85">0</h3>
-              <span class="percent">%</span>
-              <p>Cases Resolved Successfully</p>
-            </div>
-          </div>
-          <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="bi bi-building-fill"></i>
-              </div>
-              <h3 class="counter" data-target="100">0</h3>
-              <span class="plus">+</span>
-              <p>Partner Organizations</p>
-            </div>
-          </div>
-          <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="bi bi-headset"></i>
-              </div>
-              <h3>24/7</h3>
-              <p>Support Availability</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- FAQ Section -->
@@ -534,14 +527,13 @@
           the way.
         </p>
         <div class="cta-buttons">
-          <a href="#" class="btn btn-primary btn-lg">Report Now</a>
-          <a href="#" class="btn btn-outline-light btn-lg">Learn More</a>
+          <a href="#hero" class="btn btn-primary btn-lg">Report Now</a>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer py-5">
+    <footer id="footer" class="footer py-5">
       <div class="container">
         <div class="row g-4">
           <div class="col-lg-4 col-md-6">
