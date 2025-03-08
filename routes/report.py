@@ -3,6 +3,11 @@ from fastapi import APIRouter, HTTPException
 from models import Report
 from services.report_gen import generate_pdf
 #from database import chatbot_history
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://localhost:27017/")  # Adjust if needed
+db = client["sakhi_db"]
+reports_collection = db["reports"]
 
 router = APIRouter()
 
