@@ -1,13 +1,15 @@
 from fastapi import FastAPI
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # Load environment variables
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from starlette.requests import Request
+from fastapi.middleware.cors import CORSMiddleware
+
+# Import routers (Make sure these modules exist)
 from routes.report import router as report_router
 from routes.severity import router as severity_router
 from routes.chatbot import router as chatbot_router
-from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables
 load_dotenv()

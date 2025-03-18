@@ -214,17 +214,6 @@
 
                 <!-- Step 3: Additional Information -->
                 <div class="form-step" id="step3">
-                  <div class="mb-4">
-                    <label for="reportSurity" class="form-label">
-                      <i class="bi bi-flag-fill me-2"></i>Are you sure to report
-                      this incident?
-                    </label>
-                    <select id="reportSurity" class="form-select">
-                      <option value="Yes">Yes, I am sure.</option>
-                      <option value="No">No</option>
-                    </select>
-                  </div>
-
                   <div class="d-flex justify-content-between">
                     <button
                       type="button"
@@ -259,6 +248,15 @@
                   </div>
                 </div>
               </div>
+              <div class="high-severity-redirect" id="highSeverityRedirect">
+                <div class="alert alert-danger">
+                    <h3>High Severity Detected</h3>
+                    <p>Your case has been identified as high severity.</p>
+                    <div class="spinner-border text-danger" role="status">
+                      <span class="visually-hidden">Redirecting...</span>
+                    </div>
+                </div>
+            </div>
               <div class="submission-success" id="submissionSuccess">
                 <div class="success-icon">
                   <i class="bi bi-check-circle-fill"></i>
