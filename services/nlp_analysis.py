@@ -1,55 +1,60 @@
+import logging
 from transformers import pipeline
 import spacy
-import logging
+from dotenv import load_dotenv
+import os
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-try:
-    nlp = spacy.load("en_core_web_sm")
-    classifier = pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
-    logger.info("NLP models loaded successfully")
-except Exception as e:
-    logger.error(f"Error loading NLP models: {e}")
-    raise
 
-'''def analysis_severity(text):
-    sentiment = sentiment_model(text)[0]
-    doc = spacy_model(text)
-    if sentiment["label"] == "NEGATIVE" or any(ent.label == "THREAT")'''
+load_dotenv()
 
-def extract_keywords(text):
-    doc = nlp(text)
-    return [token.text for token in doc if token.pos_ in ["NOUN", "PROPN", "VERB"]]
+class SeverityAnalyzer:
+    def __init__(self):
+        self.nlp = None
+        self.classifier = None
+        self.initialize_models()
 
-def classify_severity(text):
-    try:
-        logger.info(f"Processing text: {text[:50]}...")
-        result = classifier(text)[0]
+    def initialize_models(self):
+        try:
+            self.nlp = spacy.load("en_core_web_sm")
+            self.classifier = pipeline(
+                "text-classification",
+                model="distilbert-base-uncased-finetuned-sst-2-english",
+                device=-1
+            )
+            logger.info("NLP models loaded successfully")
+        except Exception as e:
+            logger.error(f"Error loading models: {e}")
+            raise
 
-        label = result["label"]
-        score = result["score"]
+    def classify_severity(self, text):
+        """Classifies severity using NLP and sentiment analysis."""
+        try:
+            logger.info(f"Analyzing text: {text[:100]}...")
+            sentiment = self.classifier(text)[0]
+            logger.info(f"Sentiment analysis result: {sentiment}")
 
-        doc = nlp(text)
-        threat_detected = any(ent.label_ == "THREAT" for ent in doc.ents)
+            severity_keywords = [
+                'assault', 'violence', 'threat', 'harassment',
+                'abuse', 'rape', 'attack', 'stalking', 'fear'
+            ]
+            
+            has_severity_terms = any(keyword in text.lower() for keyword in severity_keywords)
+            doc = self.nlp(text)
 
-        logger.info(f"Classification result: {label} (score: {score})")
-        logger.info(f"Threat detected: {threat_detected}")
+            logger.info(f"Has severity terms: {has_severity_terms}")
+            logger.info(f"Sentiment score: {sentiment['score']}")
 
-        if label == "NEGATIVE" or threat_detected:
-            return "HIGH"
-        return "LOW"
-    except Exception as e:
-        logger.error(f"Error classifying severity: {e}")
-        raise
-    '''print("your text is being processsing...")
-    result = classifier(text)[0]
+            if (sentiment['label'] == 'NEGATIVE' and sentiment['score'] > 0.75) or has_severity_terms:
+                logger.info("Classified as HIGH severity")
+                return "HIGH"
+            else:
+                logger.info("Classified as LOW severity")
+                return "LOW"
+        except Exception as e:
+            logger.error(f"Error in severity classification: {e}")
+            raise
 
-    label = result["label"]
-    doc = nlp(text)
-    threat_detected = any(ent.label_ == "THREAT" for ent in doc.ents)
 
-    if label == "NEGATIVE" or threat_detected:
-        print("Classified as HIGH severity")
-        return "HIGH"
-    print("Classified as LOW severity")
-    return "LOW"'''
+analyzer = SeverityAnalyzer()

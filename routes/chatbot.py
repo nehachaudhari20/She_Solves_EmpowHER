@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 import google.generativeai as genai
 import os
-from dotenv import load_dotenv
+
 router = APIRouter()
 genai.configure(api_key=os.getenv("AIzaSyB38R7k_1Mp-LeVpznoumLhPnudmPhvmYg"))    
 model = genai.GenerativeModel("gemini-1.5-flash",
@@ -10,16 +10,10 @@ model = genai.GenerativeModel("gemini-1.5-flash",
 #response = model.generate_content("hi i am suffering from depression. a collegue my office sexually abused me")
 #print(response.text)
 
-@router.post("/")  # Changed from "/chatbot"
-async def chatbot_responder(data: dict, request: Request):
+@router.post("/")
+async def chatbot_responder(data: dict):
     try:
-        # Get context from session if available
-        context = request.session.get('incident_context', '')
-        
-        # Combine context with user message if context exists
-        message = f"Context: {context}\nUser message: {data['message']}" if context else data['message']
-        
-        response = model.generate_content(message)
+        response = model.generate_content(data["message"])
         return {'response': response.text}
     except Exception as e:
         return {'error': str(e)}

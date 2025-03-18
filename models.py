@@ -9,5 +9,5 @@ class Report(BaseModel):
     incident_type: str
     date_time: datetime
     location: str
-    evidence: Optional[str]= None
+    #evidence: Optional[str]= None
     severity: Optional[str]= "PENDING"

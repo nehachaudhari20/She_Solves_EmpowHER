@@ -5,3 +5,5 @@ pymongo
 transformers
 spacy
 reportlab
+bcrypt
+authlib
