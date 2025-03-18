@@ -321,6 +321,34 @@ textarea.form-control {
   transform: translateY(-3px);
 }
 
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #212529;
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+  background-color: #e0a800;
+  border-color: #e0a800;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background-color: #c82333;
+  border-color: #bd2130;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
 .incident-other {
   display: none;
   opacity: 0;
@@ -334,7 +362,11 @@ textarea.form-control {
   transform: translateY(0);
 }
 
-/* Success Message */
+/* New sections for the updated flow */
+.check-severity,
+.low-severity-redirect,
+.high-severity-redirect,
+.report-generation,
 .submission-success {
   display: none;
   padding: 30px;
@@ -342,6 +374,44 @@ textarea.form-control {
   animation: fadeIn 0.5s ease forwards;
 }
 
+.check-severity p {
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+.low-severity-redirect .alert {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-color: rgba(255, 193, 7, 0.25);
+  color: #ffc107;
+}
+
+.high-severity-redirect .alert {
+  background-color: rgba(220, 53, 69, 0.1);
+  border-color: rgba(220, 53, 69, 0.25);
+  color: #dc3545;
+}
+
+.low-severity-redirect h3,
+.high-severity-redirect h3 {
+  margin-bottom: 15px;
+}
+
+.low-severity-redirect p,
+.high-severity-redirect p {
+  margin-bottom: 20px;
+}
+
+.report-preview {
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.report-preview img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Success Message */
 .success-icon {
   width: 80px;
   height: 80px;
@@ -355,37 +425,7 @@ textarea.form-control {
   margin: 0 auto 20px;
   box-shadow: var(--shadow);
 }
-#checkSeverity {
-  display: none;
-  padding: 30px;
-  text-align: center;
-  animation: fadeIn 0.5s ease forwards;
-}
 
-#checkSeverity p {
-  margin-top: 15px;
-  font-size: 1.1rem;
-}
-.low-severity-redirect {
-  display: none;
-  padding: 30px;
-  text-align: center;
-  animation: fadeIn 0.5s ease forwards;
-}
-
-.low-severity-redirect .alert {
-  background-color: rgba(255, 193, 7, 0.1);
-  border-color: rgba(255, 193, 7, 0.25);
-  color: #ffc107;
-}
-
-.low-severity-redirect h3 {
-  margin-bottom: 15px;
-}
-
-.low-severity-redirect p {
-  margin-bottom: 20px;
-}
 .report-id {
   font-size: 1.1rem;
   font-weight: 600;
@@ -394,6 +434,14 @@ textarea.form-control {
   background-color: rgba(255, 255, 255, 0.1);
   display: inline-block;
   margin-top: 15px;
+}
+
+/* Review information */
+.review-info {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 0.95rem;
 }
 
 /* Footer */
@@ -414,6 +462,27 @@ textarea.form-control {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Ripple effect for buttons */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(255, 255, 255, 0.4);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
   }
 }
 
@@ -457,7 +526,12 @@ textarea.form-control {
   }
 
   .form-header,
-  form {
+  form,
+  .check-severity,
+  .low-severity-redirect,
+  .high-severity-redirect,
+  .report-generation,
+  .submission-success {
     padding: 20px;
   }
 
@@ -470,32 +544,4 @@ textarea.form-control {
     flex-direction: column;
     gap: 10px;
   }
-}
-
-/* Add these styles */
-.check-severity,
-.low-severity-redirect,
-.submission-success {
-  display: none;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.spinner-border {
-  margin: 1rem auto;
-}
-
-.success-icon {
-  font-size: 3rem;
-  color: #28a745;
-  margin-bottom: 1rem;
-}
-
-.report-id {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
 }

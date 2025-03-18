@@ -63,230 +63,184 @@
     <!-- Form Section -->
     <section class="form-section">
       <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 col-md-10">
-            <div class="form-card" data-aos="fade-up">
-              <div class="form-header">
-                <div class="form-icon">
-                  <i class="bi bi-shield-lock"></i>
-                </div>
-                <h2>Report Workplace Incident</h2>
-                <p>
-                  Your information is confidential and protected. This is an
-                  anonymous reporting system.
-                </p>
+          <div class="row justify-content-center">
+              <div class="col-lg-8 col-md-10">
+                  <div class="form-card" data-aos="fade-up">
+                      <div class="form-header">
+                          <div class="form-icon">
+                              <i class="bi bi-shield-lock"></i>
+                          </div>
+                          <h2>Report Workplace Incident</h2>
+                          <p>Your information is confidential and protected. This is an anonymous reporting system.</p>
+                      </div>
+                      
+                      <form id="complaintForm">
+                          <div class="form-progress">
+                              <div class="progress">
+                                  <div class="progress-bar" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              <div class="step-indicators">
+                                  <div class="step active">1</div>
+                                  <div class="step">2</div>
+                                  <div class="step">3</div>
+                              </div>
+                          </div>
+                          
+                          <!-- Step 1: Basic Information -->
+                          <div class="form-step active" id="step1">
+                              <div class="mb-4">
+                                  <label for="location" class="form-label">
+                                      <i class="bi bi-geo-alt-fill me-2"></i>Location
+                                  </label>
+                                  <input type="text" id="location" class="form-control" placeholder="Enter the location of the incident" required>
+                                  <div class="form-text text-light">Example: Office, Work Event, Online Meeting</div>
+                              </div>
+                              
+                              <div class="mb-4">
+                                  <label for="incidentType" class="form-label">
+                                      <i class="bi bi-exclamation-triangle-fill me-2"></i>Type of Incident
+                                  </label>
+                                  <select id="incidentType" class="form-select" required>
+                                      <option value="" disabled selected>Select an incident type</option>
+                                      <option value="Sexual Harassment">Sexual Harassment</option>
+                                      <option value="Gender Discrimination">Gender Discrimination</option>
+                                      <option value="Workplace Bullying">Workplace Bullying</option>
+                                      <option value="Verbal Abuse">Verbal Abuse by Colleagues/Supervisors</option>
+                                      <option value="Stalking">Stalking by a Colleague/Superior</option>
+                                      <option value="Cyber Harassment">Cyber Harassment (Emails, Messages, etc.)</option>
+                                      <option value="Other">Other</option>
+                                  </select>
+                              </div>
+                              
+                              <div class="mb-4 incident-other" id="otherIncidentContainer">
+                                  <label for="otherIncident" class="form-label">
+                                      <i class="bi bi-pencil-fill me-2"></i>Specify Incident Type
+                                  </label>
+                                  <input type="text" id="otherIncident" class="form-control" placeholder="Please describe the type of incident">
+                              </div>
+                              
+                              <div class="d-grid">
+                                  <button type="button" class="btn btn-primary next-step">Continue <i class="bi bi-arrow-right ms-2"></i></button>
+                              </div>
+                          </div>
+                          
+                          <!-- Step 2: Incident Details -->
+                          <div class="form-step" id="step2">
+                              <div class="mb-4">
+                                  <label for="incidentDate" class="form-label">
+                                      <i class="bi bi-calendar-event-fill me-2"></i>Date of Incident
+                                  </label>
+                                  <input type="date" id="incidentDate" class="form-control" required>
+                              </div>
+                              
+                              <div class="mb-4">
+                                  <label for="incidentDetails" class="form-label">
+                                      <i class="bi bi-journal-text me-2"></i>Incident Description
+                                  </label>
+                                  <textarea id="incidentDetails" class="form-control" placeholder="Please provide details about what happened..." rows="5" required></textarea>
+                                  <div class="form-text text-light">Include relevant details like who was involved (by role/position, not names if you prefer), what exactly happened, and any witnesses.</div>
+                              </div>
+                              
+                              <div class="d-flex justify-content-between">
+                                  <button type="button" class="btn btn-outline-light prev-step"><i class="bi bi-arrow-left me-2"></i> Back</button>
+                                  <button type="button" class="btn btn-primary next-step">Continue <i class="bi bi-arrow-right ms-2"></i></button>
+                              </div>
+                          </div>
+                          
+                          <!-- Step 3: Additional Information -->
+                          <div class="form-step" id="step3">
+                              <div class="mb-4 p-4 bg-white bg-opacity-10 rounded">
+                                  <h3 class="text-xl font-semibold mb-2">Review Your Information</h3>
+                                  <p class="mb-4">Please review your information before submitting. Once submitted, your report will be analyzed for severity.</p>
+                                  
+                                  <div class="review-info">
+                                      <div class="d-flex justify-content-between mb-2">
+                                          <span class="fw-semibold">Location:</span>
+                                          <span id="reviewLocation"></span>
+                                      </div>
+                                      <div class="d-flex justify-content-between mb-2">
+                                          <span class="fw-semibold">Incident Type:</span>
+                                          <span id="reviewIncidentType"></span>
+                                      </div>
+                                      <div class="d-flex justify-content-between mb-2" id="reviewOtherContainer">
+                                          <span class="fw-semibold">Specified Type:</span>
+                                          <span id="reviewOtherIncident"></span>
+                                      </div>
+                                      <div class="d-flex justify-content-between mb-2">
+                                          <span class="fw-semibold">Date:</span>
+                                          <span id="reviewDate"></span>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                              <div class="d-flex justify-content-between">
+                                  <button type="button" class="btn btn-outline-light prev-step"><i class="bi bi-arrow-left me-2"></i> Back</button>
+                                  <button type="submit" class="btn btn-primary">Submit Data</button>
+                              </div>
+                          </div>
+                      </form>
+
+                      <!-- Checking Severity Section -->
+                      <div class="check-severity" id="checkSeverity">
+                          <div class="spinner-border text-light" role="status">
+                              <span class="visually-hidden">Checking...</span>
+                          </div>
+                          <p class="text-light">Severity of your case is being checked, please wait for a few seconds...</p>
+                      </div>
+
+                      <!-- Low Severity Section -->
+                      <div class="low-severity-redirect" id="lowSeverityRedirect">
+                          <div class="alert alert-warning">
+                              <h3>Low Severity Detected</h3>
+                              <p>Your case has been identified as low severity. You will be redirected to our self-help resources.</p>
+                              <button id="chatbotRedirectBtn" class="btn btn-warning mt-3">
+                                  <i class="bi bi-chat-dots-fill me-2"></i> Redirect to Chatbot
+                              </button>
+                          </div>
+                      </div>
+
+                      <!-- High Severity Section -->
+                      <div class="high-severity-redirect" id="highSeverityRedirect">
+                          <div class="alert alert-danger">
+                              <h3>High Severity Detected</h3>
+                              <p>Your case has been identified as high severity. Please generate a report for further action.</p>
+                              <button id="generateReportBtn" class="btn btn-danger mt-3">
+                                  <i class="bi bi-file-earmark-text-fill me-2"></i> Generate Report
+                              </button>
+                          </div>
+                      </div>
+
+                      <!-- Report Generation Section -->
+                      <div class="report-generation" id="reportGeneration">
+                          <h3 class="text-center mb-4">Report</h3>
+                          <div class="report-preview mb-4 bg-white bg-opacity-5 p-4 rounded">
+                              <img src="report-placeholder.jpg" alt="Report Preview" class="img-fluid rounded mx-auto d-block border border-white border-opacity-20">
+                          </div>
+                          <p class="text-center mb-4">Your report has been generated. You can download it for your records.</p>
+                          <div class="d-grid">
+                              <button id="downloadReportBtn" class="btn btn-primary">
+                                  <i class="bi bi-download me-2"></i> Download Report
+                              </button>
+                          </div>
+                      </div>
+
+                      <!-- Success Message Section -->
+                      <div class="submission-success" id="submissionSuccess">
+                          <div class="success-icon">
+                              <i class="bi bi-check-circle-fill"></i>
+                          </div>
+                          <h3>Report Submitted Successfully</h3>
+                          <p>Thank you for your courage in reporting this incident. Your information has been securely recorded.</p>
+                          <p class="report-id">Your Report ID: <span id="reportId">SK-2025-</span></p>
+                          <div class="d-grid mt-4">
+                              <a href="#" class="btn btn-primary">Download Report</a>
+                          </div>
+                      </div>
+                  </div>
               </div>
-
-              <form id="complaintForm">
-                <div class="form-progress">
-                  <div class="progress">
-                    <div
-                      class="progress-bar"
-                      role="progressbar"
-                      style="width: 33%"
-                      aria-valuenow="33"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                  <div class="step-indicators">
-                    <div class="step active">1</div>
-                    <div class="step">2</div>
-                    <div class="step">3</div>
-                  </div>
-                </div>
-
-                <!-- Step 1: Basic Information -->
-                <div class="form-step active" id="step1">
-                  <div class="mb-4">
-                    <label for="location" class="form-label">
-                      <i class="bi bi-geo-alt-fill me-2"></i>Location
-                    </label>
-                    <input
-                      type="text"
-                      id="location"
-                      class="form-control"
-                      placeholder="Enter the location of the incident"
-                      required
-                    />
-                    <div class="form-text text-light">
-                      Example: Office, Work Event, Online Meeting
-                    </div>
-                  </div>
-
-                  <div class="mb-4">
-                    <label for="incidentType" class="form-label">
-                      <i class="bi bi-exclamation-triangle-fill me-2"></i>Type
-                      of Incident
-                    </label>
-                    <select id="incidentType" class="form-select" required>
-                      <option value="" disabled selected>
-                        Select an incident type
-                      </option>
-                      <option value="Sexual Harassment">
-                        Sexual Harassment
-                      </option>
-                      <option value="Gender Discrimination">
-                        Gender Discrimination
-                      </option>
-                      <option value="Workplace Bullying">
-                        Workplace Bullying
-                      </option>
-                      <option value="Verbal Abuse">
-                        Verbal Abuse by Colleagues/Supervisors
-                      </option>
-                      <option value="Stalking">
-                        Stalking by a Colleague/Superior
-                      </option>
-                      <option value="Cyber Harassment">
-                        Cyber Harassment (Emails, Messages, etc.)
-                      </option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-
-                  <div class="mb-4 incident-other" id="otherIncidentContainer">
-                    <label for="otherIncident" class="form-label">
-                      <i class="bi bi-pencil-fill me-2"></i>Specify Incident
-                      Type
-                    </label>
-                    <input
-                      type="text"
-                      id="otherIncident"
-                      class="form-control"
-                      placeholder="Please describe the type of incident"
-                    />
-                  </div>
-
-                  <div class="d-grid">
-                    <button type="button" class="btn btn-primary next-step">
-                      Continue <i class="bi bi-arrow-right ms-2"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Step 2: Incident Details -->
-                <div class="form-step" id="step2">
-                  <div class="mb-4">
-                    <label for="incidentDate" class="form-label">
-                      <i class="bi bi-calendar-event-fill me-2"></i>Date of
-                      Incident
-                    </label>
-                    <input
-                      type="date"
-                      id="incidentDate"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-
-                  <div class="mb-4">
-                    <label for="incidentDetails" class="form-label">
-                      <i class="bi bi-journal-text me-2"></i>Incident
-                      Description
-                    </label>
-                    <textarea
-                      id="incidentDetails"
-                      class="form-control"
-                      placeholder="Please provide details about what happened..."
-                      rows="5"
-                      required
-                    ></textarea>
-                    <div class="form-text text-light">
-                      Include relevant details like who was involved (by
-                      role/position, not names if you prefer), what exactly
-                      happened, and any witnesses.
-                    </div>
-                  </div>
-
-                  <div class="d-flex justify-content-between">
-                    <button
-                      type="button"
-                      class="btn btn-outline-light prev-step"
-                    >
-                      <i class="bi bi-arrow-left me-2"></i> Back
-                    </button>
-                    <button type="button" class="btn btn-primary next-step">
-                      Continue <i class="bi bi-arrow-right ms-2"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Step 3: Additional Information -->
-                <div class="form-step" id="step3">
-                  <div class="d-flex justify-content-between">
-                    <button
-                      type="button"
-                      class="btn btn-outline-light prev-step"
-                    >
-                      <i class="bi bi-arrow-left me-2"></i> Back
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                      Submit Report
-                    </button>
-                  </div>
-                </div>
-              </form>
-              <div class="check-severity" id="checkSeverity">
-                <div class="spinner-border text-light" role="status">
-                  <span class="visually-hidden">Checking...</span>
-                </div>
-                <p class="text-light">
-                  Severity of your case is being checked, please wait for a few
-                  seconds...
-                </p>
-              </div>
-              <div class="low-severity-redirect" id="lowSeverityRedirect">
-                <div class="alert alert-warning">
-                  <h3>Low Severity Detected</h3>
-                  <p>
-                    Your case has been identified as low severity. You will be
-                    redirected to our self-help resources.
-                  </p>
-                  <div class="spinner-border text-warning" role="status">
-                    <span class="visually-hidden">Redirecting...</span>
-                  </div>
-                </div>
-              </div>
-              <div class="high-severity-redirect" id="highSeverityRedirect">
-                <div class="alert alert-danger">
-                    <h3>High Severity Detected</h3>
-                    <p>Your case has been identified as high severity.</p>
-                    <div class="spinner-border text-danger" role="status">
-                      <span class="visually-hidden">Redirecting...</span>
-                    </div>
-                </div>
-            </div>
-              <div class="submission-success" id="submissionSuccess">
-                <div class="success-icon">
-                  <i class="bi bi-check-circle-fill"></i>
-                </div>
-                <h3>Report Submitted Successfully</h3>
-                <p>
-                  Thank you for your courage in reporting this incident. Your
-                  information has been securely recorded.
-                </p>
-                <p class="report-id">
-                  Your Report ID: <span id="reportId">SK-2025-</span>
-                </p>
-                <div class="d-grid mt-4">
-                  <a href="#" class="btn btn-primary">Download Report</a>
-                </div>
-              </div>
-              <!-- <div class="low-severity-redirect" id="lowSeverityRedirect">
-                            <div class="alert alert-warning">
-                                <h3>Low Severity Detected</h3>
-                                <p>Your case has been identified as low severity. You will be redirected to our self-help resources.</p>
-                                <div class="spinner-border text-warning" role="status">
-                                    <span class="visually-hidden">Redirecting...</span>
-                                </div>
-                            </div>
-                        </div> -->
-            </div>
           </div>
-        </div>
       </div>
-    </section>
+  </section>
 
     <!-- Footer -->
     <footer class="footer py-4">
