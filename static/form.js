@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Simulate a delay for severity check (3 seconds)
     setTimeout(() => {
       // Randomly determine severity for demonstration purposes
-      const isLowSeverity = Math.random() < 0.9; // 50% chance of low severity
+      const isLowSeverity = Math.random() < 0.5; // 50% chance of low severity
 
       checkSeverity.style.display = "none";
       
