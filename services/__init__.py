@@ -1,5 +1,1 @@
-import os
-import sys
-import services
-
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+from .nlp_analysis import analyzer  # Importing the NLP analyzer

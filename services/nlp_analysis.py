@@ -29,7 +29,6 @@ class SeverityAnalyzer:
             raise
 
     def classify_severity(self, text):
-        """Classifies severity using NLP and sentiment analysis."""
         try:
             logger.info(f"Analyzing text: {text[:100]}...")
             sentiment = self.classifier(text)[0]

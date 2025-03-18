@@ -1,16 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize AOS
-  // Declare AOS if it's not already available globally
-  if (typeof AOS !== "undefined") {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
-  } else {
-    console.warn(
-      "AOS is not defined. Make sure it's properly imported or included."
-    );
-  }
+  AOS = AOS || {}; // Declare AOS if it's not already defined
+  AOS.init({
+    duration: 800,
+    once: true,
+  });
 
   // Form elements
   const form = document.getElementById("complaintForm");
@@ -23,26 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevButtons = document.querySelectorAll(".prev-step");
   const progressBar = document.querySelector(".progress-bar");
   const stepIndicators = document.querySelectorAll(".step");
-
-  // New sections for the updated flow
+  const submissionSuccess = document.getElementById("submissionSuccess");
   const checkSeverity = document.getElementById("checkSeverity");
   const lowSeverityRedirect = document.getElementById("lowSeverityRedirect");
-  const highSeverityRedirect = document.getElementById("highSeverityRedirect");
-  const reportGeneration = document.getElementById("reportGeneration");
-  const submissionSuccess = document.getElementById("submissionSuccess");
   const reportIdElement = document.getElementById("reportId");
-
-  // Buttons for the new flow
-  const chatbotRedirectBtn = document.getElementById("chatbotRedirectBtn");
-  const generateReportBtn = document.getElementById("generateReportBtn");
-  const downloadReportBtn = document.getElementById("downloadReportBtn");
-
-  // Review elements
-  const reviewLocation = document.getElementById("reviewLocation");
-  const reviewIncidentType = document.getElementById("reviewIncidentType");
-  const reviewOtherContainer = document.getElementById("reviewOtherContainer");
-  const reviewOtherIncident = document.getElementById("reviewOtherIncident");
-  const reviewDate = document.getElementById("reviewDate");
 
   // Show "Other" input field when "Other" is selected
   incidentTypeSelect.addEventListener("change", function () {
@@ -83,35 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     currentStep = stepIndex;
     updateProgress();
-
-    // Update review information when reaching step 3
-    if (stepIndex === 2) {
-      updateReviewInfo();
-    }
-  }
-
-  function updateReviewInfo() {
-    // Update the review section with current form values
-    const location = document.getElementById("location").value;
-    const incidentType = document.getElementById("incidentType").value;
-    const otherIncident = document.getElementById("otherIncident").value;
-    const incidentDate = document.getElementById("incidentDate").value;
-
-    reviewLocation.textContent = location;
-    reviewIncidentType.textContent = incidentType;
-
-    if (incidentType === "Other" && otherIncident) {
-      reviewOtherContainer.style.display = "flex";
-      reviewOtherIncident.textContent = otherIncident;
-    } else {
-      reviewOtherContainer.style.display = "none";
-    }
-
-    reviewDate.textContent = incidentDate;
   }
 
   // Next button event listeners
-  nextButtons.forEach((button) => {
+  nextButtons.forEach((button, index) => {
     button.addEventListener("click", () => {
       // Simple validation for required fields in current step
       const currentStepElement = steps[currentStep];
@@ -140,60 +93,83 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Form submission
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("complaintForm");
+    const checkSeverity = document.getElementById("checkSeverity");
+    const lowSeverityRedirect = document.getElementById("lowSeverityRedirect");
+    const submissionSuccess = document.getElementById("submissionSuccess");
+    const reportIdElement = document.getElementById("reportId");
+    const reportDownloadLink = document.getElementById("reportDownloadLink");
 
-    // Hide form steps and show "Check Severity" section
-    form.style.display = "none";
-    checkSeverity.style.display = "block";
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    // Generate a random report ID
-    const randomId = Math.floor(100000 + Math.random() * 900000);
-    reportIdElement.textContent = `SK-2025-${randomId}`;
+      // Get user input
+      const incidentDetails = document.getElementById("incidentDetails").value;
+      const location = document.getElementById("incidentLocation").value;
+      const dateTime = document.getElementById("incidentDateTime").value;
+      const incidentType = document.getElementById("incidentType").value;
 
-    // Simulate a delay for severity check (3 seconds)
-    setTimeout(() => {
-      // Randomly determine severity for demonstration purposes
-      const isLowSeverity = Math.random() < 0.9; // 50% chance of low severity
+      // Show loading
+      checkSeverity.style.display = "block";
 
-      checkSeverity.style.display = "none";
+      try {
+        // Step 1: Call FastAPI NLP Analysis (`/nlp_analysis`)
+        const response = await fetch("/nlp_analysis", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            incident_text: incidentDetails,
+            location: location,
+            date_time: dateTime,
+            incident_type: incidentType,
+          }),
+        });
 
-      if (isLowSeverity) {
-        // Show low severity redirect message
-        lowSeverityRedirect.style.display = "block";
-      } else {
-        // Show high severity redirect message
-        highSeverityRedirect.style.display = "block";
+        const data = await response.json();
+        console.log("Severity result:", data);
+
+        // Hide loading state
+        checkSeverity.style.display = "none";
+
+        // Step 2: Handle LOW severity (Redirect to Chatbot)
+        if (data.severity === "LOW") {
+          lowSeverityRedirect.style.display = "block";
+          setTimeout(() => {
+            window.location.href = "/chatbot";
+          }, 3000);
+          return;
+        }
+
+        // Step 3: Handle HIGH severity (Generate PDF Report)
+        const reportResponse = await fetch("/generate-report/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            incident_id: data.incident_id,
+            incident_text: incidentDetails,
+            location: location,
+            date_time: dateTime,
+            incident_type: incidentType,
+            severity: data.severity,
+          }),
+        });
+
+        const reportData = await reportResponse.json();
+        console.log("Report generated:", reportData);
+
+        // Show success message and download link
+        submissionSuccess.style.display = "block";
+        reportIdElement.textContent = data.incident_id;
+        reportDownloadLink.innerHTML = `<a href="${reportData.download_url}" target="_blank">Download Report</a>`;
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error processing your report. Please try again.");
+        checkSeverity.style.display = "none";
       }
-
-      // Scroll to top of form card
-      const formCard = document.querySelector(".form-card");
-      formCard.scrollIntoView({ behavior: "smooth" });
-    }, 3000);
+    });
   });
 
-  // Chatbot redirect button
-  chatbotRedirectBtn.addEventListener("click", () => {
-    // In a real app, redirect to chatbot page
-    window.location.href = "chatbot.html"; // Replace with your chatbot URL
-  });
-
-  // Generate report button
-  generateReportBtn.addEventListener("click", () => {
-    highSeverityRedirect.style.display = "none";
-    reportGeneration.style.display = "block";
-  });
-
-  // Download report button
-  downloadReportBtn.addEventListener("click", () => {
-    // In a real app, handle the report download
-    // For demo purposes, just show success message
-    reportGeneration.style.display = "none";
-    submissionSuccess.style.display = "block";
-  });
-
-  // Add ripple effect to buttons
   const buttons = document.querySelectorAll(".btn");
 
   buttons.forEach((button) => {
@@ -217,7 +193,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize
   showStep(0);
+});
 
-  // Hide review other container by default
-  reviewOtherContainer.style.display = "none";
+// Add CSS for the ripple effect
+document.addEventListener("DOMContentLoaded", () => {
+  const style = document.createElement("style");
+  style.textContent = `
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            background: rgba(255, 255, 255, 0.4);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            width: 100px;
+            height: 100px;
+            margin-left: -50px;
+            margin-top: -50px;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+  document.head.appendChild(style);
 });

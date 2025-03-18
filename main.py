@@ -4,6 +4,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from starlette.requests import Request
+from routes.report import router as report_router
+from routes.severity import router as severity_router
+from routes.chatbot import router as chatbot_router
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
@@ -53,6 +56,11 @@ oauth.register(
     client_kwargs={"scope": "openid email profile"},
 )
 '''
+
+app.include_router(report_router, prefix="/report", tags=["Incident Report"])
+app.include_router(severity_router, prefix="/severity", tags=["Severity Analysis"])
+app.include_router(chatbot_router, prefix="/chatbot", tags=["SAKHI"])
+
 # Mount static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")    
 templates = Jinja2Templates(directory="templates")
@@ -77,6 +85,11 @@ async def serve_form(request: Request):
 @app.get("/chatbot", response_class=HTMLResponse)
 async def serve_chatbot(request: Request):
     return templates.TemplateResponse("chatbot.html", {"request": request})
+
+@app.get("/chatbot/context")
+async def get_chatbot_context():
+    # This endpoint will be used by chatbot.js to get the incident context
+    return {"message": "How can I help you with your situation?"}
 
 class IncidentRequest(BaseModel):
     incident_text: str

@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       if (response.ok) {
         alert("Login successful!");
-        window.location.href = "/form"; // Redirect on success
+        window.location.href = "form.html"; // Redirect on success
       } else {
         alert("Login failed: " + data.detail);
       }
