@@ -85,11 +85,6 @@ async def serve_form(request: Request):
 @app.get("/chatbot", response_class=HTMLResponse)
 async def serve_chatbot(request: Request):
     return templates.TemplateResponse("chatbot.html", {"request": request})
-'''
-@app.get("/chatbot/context")
-async def get_chatbot_context():
-    # This endpoint will be used by chatbot.js to get the incident context
-    return {"message": "How can I help you with your situation?"}'''
 
 class IncidentRequest(BaseModel):
     incident_text: str

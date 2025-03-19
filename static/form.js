@@ -147,44 +147,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Form submission
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Hide form steps and show "Check Severity" section
     form.style.display = "none";
     checkSeverity.style.display = "block";
 
-    // Generate a random report ID
-    const randomId = Math.floor(100000 + Math.random() * 900000);
-    reportIdElement.textContent = `SK-2025-${randomId}`;
+    const incidentDetails = {
+      incident_text: document.getElementById("incidentDetails").value,
+      incident_id: `SK-${Date.now()}`,
+    };
 
-    // Simulate a delay for severity check (3 seconds)
-    setTimeout(() => {
-      // Determine severity based on incident type for demonstration
-      // In a real app, this would be based on more complex criteria
-      const incidentType = document.getElementById("incidentType").value;
-      const highSeverityTypes = [
-        "Sexual Harassment",
-        "Stalking",
-        "Verbal Abuse",
-      ];
-      const isHighSeverity = highSeverityTypes.includes(incidentType);
+    try {
+      const response = await fetch("/severity/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(incidentDetails),
+      });
+
+      if (!response.ok) throw new Error("Failed to classify severity");
+
+      const data = await response.json();
+      console.log("Severity Response:", data);
 
       checkSeverity.style.display = "none";
 
-      if (isHighSeverity) {
-        // Show high severity redirect message
+      if (data.severity === "HIGH") {
         highSeverityRedirect.style.display = "block";
+        reportIdElement.textContent = data.incident_id;
       } else {
-        // Show low severity redirect message
         lowSeverityRedirect.style.display = "block";
       }
-
-      // Scroll to top of form card
-      const formCard = document.querySelector(".form-card");
-      formCard.scrollIntoView({ behavior: "smooth" });
-    }, 3000);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+      form.style.display = "block";
+    }
   });
 
   // Chatbot redirect button
