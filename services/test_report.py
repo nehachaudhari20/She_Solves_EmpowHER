@@ -5,7 +5,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import uuid
 from datetime import datetime
 
-
 from report_gen import generate_pdf
 
 def test_generate_pdf():

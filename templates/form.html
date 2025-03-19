@@ -28,7 +28,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="/home.html">
           <img src="static/logo.png" alt="Logo" class="nav-logo" />
           <span class="ms-2">SAKHI</span>
         </a>
@@ -46,16 +46,15 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link" href="home.html">HOME</a>
+              <a class="nav-link" href="/home.html">HOME</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
             <li class="nav-item">
-              <a class="nav-link" href="#">CONTACT US</a>
+              <a class="nav-link" href="/home.html#features-section">ABOUT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/home.html#footer">CONTACT US</a>
             </li>
           </ul>
-          <a href="chatbot.html" class="chat-btn">
-            <i class="bi bi-chat-dots-fill"></i> CHAT
-          </a>
         </div>
       </div>
     </nav>
@@ -198,6 +197,22 @@
                       happened, and any witnesses.
                     </div>
                   </div>
+                  <div class="mb-4">
+                    <label for="evidence" class="form-label">
+                      <i class="bi bi-file-earmark-text me-2"></i>Evidence
+                      (Optional)
+                    </label>
+                    <input
+                      type="file"
+                      id="evidence"
+                      class="form-control"
+                      accept="image/*, application/pdf, video/*"
+                    />
+                    <div class="form-text text-light">
+                      You can upload any evidence like screenshots, photos, or
+                      documents.
+                    </div>
+                  </div>
 
                   <div class="d-flex justify-content-between">
                     <button
@@ -214,15 +229,40 @@
 
                 <!-- Step 3: Additional Information -->
                 <div class="form-step" id="step3">
-                  <div class="mb-4">
-                    <label for="reportSurity" class="form-label">
-                      <i class="bi bi-flag-fill me-2"></i>Are you sure to report
-                      this incident?
-                    </label>
-                    <select id="reportSurity" class="form-select">
-                      <option value="Yes">Yes, I am sure.</option>
-                      <option value="No">No</option>
-                    </select>
+                  <div class="mb-4 p-4 bg-white bg-opacity-10 rounded">
+                    <h3 class="text-xl font-semibold mb-2">
+                      Review Your Information
+                    </h3>
+                    <p class="mb-4">
+                      Please review your information before submitting. Once
+                      submitted, your report will be analyzed for severity.
+                    </p>
+
+                    <div class="review-info">
+                      <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Location:</span>
+                        <span id="reviewLocation"></span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Incident Type:</span>
+                        <span id="reviewIncidentType"></span>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between mb-2"
+                        id="reviewOtherContainer"
+                      >
+                        <span class="fw-semibold">Specified Type:</span>
+                        <span id="reviewOtherIncident"></span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Date:</span>
+                        <span id="reviewDate"></span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold">Evidence:</span>
+                        <span id="reviewEvidence"></span>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="d-flex justify-content-between">
@@ -233,33 +273,98 @@
                       <i class="bi bi-arrow-left me-2"></i> Back
                     </button>
                     <button type="submit" class="btn btn-primary">
-                      Submit Report
+                      Submit Data
                     </button>
                   </div>
                 </div>
               </form>
-              <div class="check-severity" id="checkSeverity">
+
+              <!-- Checking Severity Section -->
+              <div
+                class="check-severity"
+                id="checkSeverity"
+                style="display: none"
+              >
                 <div class="spinner-border text-light" role="status">
                   <span class="visually-hidden">Checking...</span>
                 </div>
                 <p class="text-light">
-                  Severity of your case is being checked, please wait for a few
+                  Checking your severity of case, please wait for a few
                   seconds...
                 </p>
               </div>
-              <div class="low-severity-redirect" id="lowSeverityRedirect">
+
+              <!-- Low Severity Section -->
+              <div
+                class="low-severity-redirect"
+                id="lowSeverityRedirect"
+                style="display: none"
+              >
                 <div class="alert alert-warning">
                   <h3>Low Severity Detected</h3>
                   <p>
-                    Your case has been identified as low severity. You will be
-                    redirected to our self-help resources.
+                    Your case has been identified as low severity. You can use
+                    our chatbot for guidance.
                   </p>
-                  <div class="spinner-border text-warning" role="status">
-                    <span class="visually-hidden">Redirecting...</span>
-                  </div>
+                  <button id="chatbotRedirectBtn" class="btn btn-warning mt-3">
+                    <i class="bi bi-chat-dots-fill me-2"></i> Redirect to
+                    Chatbot
+                  </button>
                 </div>
               </div>
-              <div class="submission-success" id="submissionSuccess">
+
+              <!-- High Severity Section -->
+              <div
+                class="high-severity-redirect"
+                id="highSeverityRedirect"
+                style="display: none"
+              >
+                <div class="alert alert-danger">
+                  <h3>High Severity Detected</h3>
+                  <p>
+                    Your case has been identified as high severity. Please
+                    generate a report for further action.
+                  </p>
+                  <button id="generateReportBtn" class="btn btn-danger mt-3">
+                    <i class="bi bi-file-earmark-text-fill me-2"></i> Generate
+                    Report
+                  </button>
+                </div>
+              </div>
+
+              <!-- Report Generation Section -->
+              <div
+                class="report-generation"
+                id="reportGeneration"
+                style="display: none"
+              >
+                <h3 class="text-center mb-4">Report</h3>
+                <div
+                  class="report-preview mb-4 bg-white bg-opacity-5 p-4 rounded"
+                >
+                  <img
+                    src="/placeholder.svg?height=400&width=600"
+                    alt="Report Preview"
+                    class="img-fluid rounded mx-auto d-block border border-white border-opacity-20"
+                  />
+                </div>
+                <p class="text-center mb-4">
+                  Your report has been generated. You can download it for your
+                  records.
+                </p>
+                <div class="d-grid">
+                  <button id="downloadReportBtn" class="btn btn-primary">
+                    <i class="bi bi-download me-2"></i> Download Report
+                  </button>
+                </div>
+              </div>
+
+              <!-- Success Message Section -->
+              <div
+                class="submission-success"
+                id="submissionSuccess"
+                style="display: none"
+              >
                 <div class="success-icon">
                   <i class="bi bi-check-circle-fill"></i>
                 </div>
@@ -271,19 +376,10 @@
                 <p class="report-id">
                   Your Report ID: <span id="reportId">SK-2025-</span>
                 </p>
-                <div class="d-grid mt-4">
-                  <a href="#" class="btn btn-primary">Download Report</a>
-                </div>
+                <!-- <div class="d-grid mt-4">
+                              <a href="#" class="btn btn-primary">Download Report</a>
+                          </div> -->
               </div>
-              <!-- <div class="low-severity-redirect" id="lowSeverityRedirect">
-                            <div class="alert alert-warning">
-                                <h3>Low Severity Detected</h3>
-                                <p>Your case has been identified as low severity. You will be redirected to our self-help resources.</p>
-                                <div class="spinner-border text-warning" role="status">
-                                    <span class="visually-hidden">Redirecting...</span>
-                                </div>
-                            </div>
-                        </div> -->
             </div>
           </div>
         </div>
