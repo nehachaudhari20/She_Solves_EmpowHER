@@ -81,27 +81,3 @@ npm start
 
 
 ## FRONTEND DESIGN
-
-![Screenshot 2025-03-06 114136](https://github.com/user-attachments/assets/9e2791c0-9ab1-4d45-8dcd-1c2852cdbad6)
-
-![Screenshot 2025-03-06 114129](https://github.com/user-attachments/assets/012528ba-7058-4690-81a2-244d9622cd71)
-
-![Screenshot 2025-03-06 114121](https://github.com/user-attachments/assets/78276bc5-0f7a-4785-a2e3-ca580f302ae0)
-
-![Screenshot 2025-03-06 114114](https://github.com/user-attachments/assets/71098be3-c05b-432a-92bd-0ed479614ca1)
-
-![Screenshot 2025-03-06 114104](https://github.com/user-attachments/assets/edc0b671-e627-4570-a4b1-ee1b2de6faff)
-
-![Screenshot 2025-03-06 114052](https://github.com/user-attachments/assets/4ae3aec5-53cc-4d26-b1d7-9db5447cb320)
-
-![Screenshot 2025-03-06 112216](https://github.com/user-attachments/assets/2748099f-7037-4fcd-b3fe-227f8d9e0350)
-
-![Screenshot 2025-03-06 111336](https://github.com/user-attachments/assets/f899f203-a89b-4b35-a038-aa7f4dd17a67)
-
-![Screenshot 2025-03-06 111327](https://github.com/user-attachments/assets/e77e45ab-425b-4552-a0ce-a6aa21154944)
-
-![Screenshot 2025-03-06 111301](https://github.com/user-attachments/assets/b01e1b78-4530-477f-a976-0c9f8bac76a7)
-
-![image](https://github.com/user-attachments/assets/57b1b9fe-361c-49dd-8e98-51e49e2db4cc)
-
-
