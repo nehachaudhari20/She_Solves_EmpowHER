@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Make API call to your FastAPI endpoint
       const response = await fetch("http://127.0.0.1:8000/chatbot/", {
-        // <-- This is where the request is made
+    
         method: "POST",
         headers: {
           "Content-Type": "application/json",

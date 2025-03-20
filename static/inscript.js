@@ -15,35 +15,39 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle Form Submission for Sign-In
-  document.querySelector("form").addEventListener("submit", async (e) => {
-    e.preventDefault();
+  document
+    .getElementById("signInForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const email = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-    try {
-      const response = await fetch("/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `username=${encodeURIComponent(
-          email
-        )}&password=${encodeURIComponent(password)}`,
-      });
+      try {
+        const response = await fetch("/signin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        });
 
-      const data = await response.json();
-      if (response.ok) {
-        alert("Login successful!");
-        window.location.href = "form.html"; // Redirect on success
-      } else {
-        alert("Login failed: " + data.detail);
+        const data = await response.json();
+
+        if (response.ok) {
+          alert("Login successful!");
+          window.location.href = "/templates/form.html"; // Redirect on success
+        } else {
+          alert(data.detail || "Invalid credentials");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Login failed. Please try again.");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong. Please try again.");
-    }
-  });
+    });
 
   // Create animated background particles
   const particlesContainer = document.getElementById("particles-container");

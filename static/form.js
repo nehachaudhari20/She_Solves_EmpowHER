@@ -149,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     form.style.display = "none";
     checkSeverity.style.display = "block";
 
@@ -159,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch("/severity/", {
+      const response = await fetch("http://127.0.0.1:8000/severity/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(incidentDetails),
@@ -172,11 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       checkSeverity.style.display = "none";
 
-      if (data.severity === "HIGH") {
-        highSeverityRedirect.style.display = "block";
+      if (data.severity === "LOW") {
+        lowSeverityRedirect.style.display = "block";
         reportIdElement.textContent = data.incident_id;
       } else {
-        lowSeverityRedirect.style.display = "block";
+        highSeverityRedirect.style.display = "block";
       }
     } catch (error) {
       console.error("Error:", error);
@@ -187,9 +186,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Chatbot redirect button
   chatbotRedirectBtn.addEventListener("click", () => {
-    // In a real app, redirect to chatbot page
-    alert("Redirecting to chatbot...");
-    // window.location.href = "chatbot.html"; // Replace with your chatbot URL
+    try {
+      window.location.href = "/chatbot";
+    } catch (error) {
+      console.error("Redirection error:", error);
+      alert("Unable to open chatbot. Please try again.");
+    }
   });
 
   // Generate report button

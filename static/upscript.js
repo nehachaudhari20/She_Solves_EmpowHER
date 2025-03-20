@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
       alert(data.message);
-      if (response.ok) window.location.href = "sign-in.html";
+      if (response.ok) window.location.href = "/templates/form.html";
 
       // Check if passwords match
       if (password !== confirmPassword) {
@@ -138,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Simulate successful signup
       alert("Sign up successful! Redirecting to login page...");
       window.location.href = "index.html";
     });

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Response
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -15,14 +15,26 @@ from authlib.integrations.starlette_client import OAuth
 from pydantic import BaseModel
 import logging
 import os
+import jwt
+from datetime import datetime, timedelta
 import bcrypt
 
 # Load environment variables
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
+SECRET_KEY = "JWT_SECRET"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 #GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 #GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
 
 # MongoDB Connection
 client = MongoClient(MONGO_URI)
@@ -56,7 +68,66 @@ oauth.register(
     client_kwargs={"scope": "openid email profile"},
 )
 '''
+# Add middleware to protect routes
+async def get_current_user(request: Request):
+    token = request.cookies.get("access_token")
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username = payload.get("sub")
+        if not username:
+            raise HTTPException(status_code=401, detail="Invalid token")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    user = users_collection.find_one({"username": username})
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    
+    return user
 
+@app.post("/signin")
+async def signin(response: Response, form_data: dict):
+    try:
+        # Find user in database
+        user = users_collection.find_one({"username": form_data["username"]})
+        
+        if not user:
+            raise HTTPException(status_code=401, detail="User not found")
+            
+        # Verify password
+        if not verify_password(form_data["password"], user["password"]):
+            raise HTTPException(status_code=401, detail="Incorrect password")
+
+        # Create access token
+        access_token = create_access_token(
+            data={"sub": user["username"]}
+        )
+
+        # Set cookie with token
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            max_age=1800,  # 30 minutes
+            samesite="lax"
+        )
+
+        return {
+            "message": "Login successful",
+            "username": user["username"],
+            "access_token": access_token
+        }
+
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 app.include_router(report_router, prefix="/report", tags=["Incident Report"])
 app.include_router(severity_router, prefix="/severity", tags=["Severity Analysis"])
 app.include_router(chatbot_router, prefix="/chatbot", tags=["SAKHI"])
@@ -74,6 +145,7 @@ async def serve_home(request: Request):
 async def serve_sign(request: Request):
     return templates.TemplateResponse("sign-in.html", {"request": request})
 
+
 @app.get("/sign-up", response_class=HTMLResponse)
 async def serve_signup(request: Request):
     return templates.TemplateResponse("sign-up.html", {"request": request})
@@ -86,6 +158,10 @@ async def serve_form(request: Request):
 async def serve_chatbot(request: Request):
     return templates.TemplateResponse("chatbot.html", {"request": request})
 
+@app.get("/chatbot/context")
+async def get_chatbot_context():
+    return {"message": "How can I help you with your situation?"}
+
 class IncidentRequest(BaseModel):
     incident_text: str
 from services.nlp_analysis import analyzer
@@ -96,17 +172,18 @@ logger = logging.getLogger(__name__)
 @app.post("/nlp_analysis")
 async def analyze_severity(incident: IncidentRequest):
     """Calls the NLP model to classify incident severity."""
-    try:
-        severity = analyzer.classify_severity(incident.incident_text)
-        incident_id = f"SK-{hash(incident.incident_text)}"
+    
+    # try:
+    #     severity = analyzer.classify_severity(incident.incident_text)
+    #     incident_id = f"SK-{hash(incident.incident_text)}"
 
-        return {
-            "incident_id": incident_id,
-            "severity": severity
-        }
-    except Exception as e:
-        logger.error(f"Error analyzing severity: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+    #     return {
+    #         "incident_id": incident_id,
+    #         "severity": severity
+    #     }
+    # except Exception as e:
+    #     logger.error(f"Error analyzing severity: {e}")
+    #     raise HTTPException(status_code=500, detail="Internal Server Error")
 
 @app.get("/api-status")
 def root():
